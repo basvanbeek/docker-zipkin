@@ -1,0 +1,46 @@
+version: '2'
+services:
+    cassandra:
+        image: cassandra:2.2
+        network_mode: host
+    zookeeper:
+        image: mbabineau/zookeeper-exhibitor:latest
+        network_mode: host
+        environment:
+            HOSTNAME: "${HOSTNAME}"
+    kafka:
+        image: wurstmeister/kafka
+        network_mode: host
+        environment:
+            KAFKA_CREATE_TOPICS: "zipkin:1:1"
+            KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 60000
+            KAFKA_ADVERTISED_PORT: 9092
+            KAFKA_ADVERTISED_HOST_NAME: "${HOSTNAME}"
+            KAFKA_ZOOKEEPER_CONNECT: "${HOSTNAME}:2181"
+    collector:
+        image: openzipkin/zipkin-collector:1.35.0
+        network_mode: host
+        environment:
+            STORAGE_TYPE: cassandra
+            TRANSPORT_TYPE: kafka
+            CASSANDRA_CONTACT_POINTS: ${HOSTNAME}
+            KAFKA_ZOOKEEPER: ${HOSTNAME}:2181
+            METADATA_BROKER_LIST: ${HOSTNAME}:9092
+    query:
+        image: openzipkin/zipkin-query:1.35.0
+        network_mode: host
+        environment:
+            STORAGE_TYPE: cassandra
+            TRANSPORT_TYPE: kafka
+            CASSANDRA_CONTACT_POINTS: ${HOSTNAME}
+            KAFKA_ZOOKEEPER: ${HOSTNAME}:2181
+            METADATA_BROKER_LIST: ${HOSTNAME}:9092
+    web:
+        image: openzipkin/zipkin-web:1.35.0
+        network_mode: host
+        environment:
+            TRANSPORT_TYPE: kafka
+            KAFKA_ZOOKEEPER: ${HOSTNAME}:2181
+            METADATA_BROKER_LIST: ${HOSTNAME}:9092
+            QUERY_PORT_9411_TCP_ADDR: ${HOSTNAME}
+            ROOTURL: http://${HOSTNAME}:8080

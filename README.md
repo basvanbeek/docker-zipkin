@@ -46,6 +46,15 @@ To start the MySQL-backed configuration, run:
 
     $ docker-compose -f docker-compose.yml -f docker-compose-mysql.yml up
 
+### Kafka
+
+The docker-compose configuration can be extended to use Kafka instead of Scribe,
+using the `docker-compose-kafka.yml` file. 
+
+To start the Kafka-backed configuration, run:
+
+    $ HOSTNAME=myhostname -f docker-compose.yml -f docker-compose-kafka.yml up
+
 ### Legacy
 
 The Cassandra and MySQL docker-compose files described above use version 2 of
