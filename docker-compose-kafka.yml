@@ -1,8 +1,5 @@
 version: '2'
 services:
-    cassandra:
-        image: cassandra:2.2
-        network_mode: host
     zookeeper:
         image: mbabineau/zookeeper-exhibitor:latest
         network_mode: host
