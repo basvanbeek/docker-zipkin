@@ -53,7 +53,7 @@ using the `docker-compose-kafka.yml` file.
 
 To start the Kafka-backed configuration, run:
 
-    $ HOSTNAME=myhostname -f docker-compose.yml -f docker-compose-kafka.yml up
+    $ HOSTNAME=myhostname docker-compose -f docker-compose.yml -f docker-compose-kafka.yml up
 
 ### Legacy
 
