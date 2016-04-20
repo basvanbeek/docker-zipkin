@@ -48,12 +48,12 @@ To start the MySQL-backed configuration, run:
 
 ### Kafka
 
-The docker-compose configuration can be extended to use Kafka instead of Scribe,
-using the `docker-compose-kafka.yml` file. 
+An alternative docker-compose configuration exists for Kafka. It replaces the
+Scribe backed configuration when using the `docker-compose-kafka.yml` file.
 
 To start the Kafka-backed configuration, run:
 
-    $ HOSTNAME=myhostname -f docker-compose.yml -f docker-compose-kafka.yml up
+    $ HOSTNAME=myhostname docker-compose -f docker-compose-kafka.yml up
 
 ### Legacy
 
